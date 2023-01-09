@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 using ToDoAPI.Models;
 using ToDoAPI.Services;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
@@ -31,22 +32,17 @@ namespace ToDoAPI.Controllers
         //}
 
         // GET api/<ListController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("OneList")]
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Ok(_listHandler.ViewOneList(id));
         }
 
         // POST api/<ListController>
         [HttpPost("CreateNewToDoList")]
         public IActionResult CreateNewToDoList(string listTitle)
         {
-            var newList = new CreateToDoList()
-            {
-                ListTitle = listTitle
-            };
-
-            return Ok(_listHandler.CreateNewToDoList(newList));
+            return Ok(_listHandler.CreateNewToDoList(listTitle));
         }
 
         [HttpGet("GetLists")]
@@ -57,26 +53,27 @@ namespace ToDoAPI.Controllers
 
 
 
-        // PUT api/<ListController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        //PUT api/<ListController>/5
+        [HttpPut("EditList")]
+        public IActionResult Put(int id, string listTitle)
         {
+
+            return Ok(_listHandler.ChangeListName(id, listTitle));
         }
+
 
         // DELETE api/<ListController>/5
         [HttpDelete("DeleteList")]
         public IActionResult Delete(int id)
         {
 
-            var item = new CreateToDoList()
-            {
-                ListId = id
-            };
-
-            _listHandler.DeleteList(item);
+            _listHandler.DeleteList(id);
 
             return Ok();
             
         }
+
+
+
     }
 }

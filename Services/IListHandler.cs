@@ -1,13 +1,14 @@
-﻿using ToDoAPI.Models;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using ToDoAPI.Models;
 
 namespace ToDoAPI.Services
 {
     public interface IListHandler 
     {
-        CreateToDoList CreateNewToDoList(CreateToDoList toDoList);
-
+        CreateToDoList CreateNewToDoList(string listTitle);
         IEnumerable <CreateToDoList> GetLists();
-
-        void DeleteList(CreateToDoList item);
+        void DeleteList(int id);
+        CreateToDoList ChangeListName(int id, string value);
+        CreateToDoList ViewOneList(int id);
     }
 }

@@ -13,51 +13,51 @@ namespace ToDoAPI.Services
             _dbContext = dbContext;
         }
 
-        public CreateToDoList CreateNewToDoList(CreateToDoList toDoList)
+        public CreateToDoList CreateNewToDoList(string listTitle)
         {
-
-
             var newList = new CreateToDoList()
             {
-                ListTitle = toDoList.ListTitle,
+                ListTitle = listTitle,
                 //Task = new List<Task>(),
                 Date = DateTime.Now.ToString("G"),
                 ThisWeek = false,
                 Expired = false,
                 //Id = json[userId].ToDoList.Count + 1,
-
             };
 
             _dbContext.ToDoLists.Add(newList);
             _dbContext.SaveChanges();   
-
-            return newList;
-
-            
+            return newList; 
         }
-
-
-
 
         public IEnumerable<CreateToDoList> GetLists()
         {
-
             return _dbContext.ToDoLists.ToList();
-
-
         }
 
-
-
-
-        public void DeleteList(CreateToDoList item)
+        public void DeleteList(int id)
         {
 
-            _dbContext.ToDoLists.Select(x => x.ListId == item.ListId);
-            _dbContext.Remove(item);
+            var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.ListId == id);
+            _dbContext.ToDoLists.Remove(selectedList);
             _dbContext.SaveChanges();
-
         }
+
+        public CreateToDoList ChangeListName(int id, string listTitle)
+        {
+            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.ListId == id);
+            list.ListTitle = listTitle;            
+            _dbContext.SaveChanges();
+            return list;
+        }
+
+
+        public CreateToDoList ViewOneList(int id)
+        {
+            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.ListId == id);
+            return list;
+        }
+
 
 
     }
