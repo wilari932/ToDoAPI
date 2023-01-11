@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 using ToDoAPI.Models;
 using ToDoAPI.Services;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ToDoAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ListController : ControllerBase
@@ -24,25 +25,17 @@ namespace ToDoAPI.Controllers
             _dbContext = context;
         }
 
-        // GET: api/<ListController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
 
-        // GET api/<ListController>/5
         [HttpGet("OneList")]
-        public IActionResult Get(int id)
+        public IActionResult Get(Guid id)
         {
             return Ok(_listHandler.ViewOneList(id));
         }
 
-        // POST api/<ListController>
         [HttpPost("CreateNewToDoList")]
-        public IActionResult CreateNewToDoList(string listTitle)
+        public IActionResult CreateNewToDoList(Guid id,string listTitle)
         {
-            return Ok(_listHandler.CreateNewToDoList(listTitle));
+            return Ok(_listHandler.CreateNewToDoList(id, listTitle));
         }
 
         [HttpGet("GetLists")]
@@ -52,26 +45,37 @@ namespace ToDoAPI.Controllers
         }
 
 
-
-        //PUT api/<ListController>/5
-        [HttpPut("EditList")]
-        public IActionResult Put(int id, string listTitle)
+        [HttpGet("GetCurrentUserLists")]
+        public IActionResult GetCurrentUserLists()
         {
+            var identity = HttpContext.User.Identity;
+            var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
 
-            return Ok(_listHandler.ChangeListName(id, listTitle));
+            return Ok(_listHandler.GetCurrentUsersLists(identity, userId));
+
         }
 
+        [HttpPut("EditList")]
+        public IActionResult Put(Guid id, string listTitle)
+        {
+            //var identity = HttpContext.User.Identity;
+            //var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
+            //var lists = _listHandler.GetLists();
+            return Ok(_listHandler.ChangeListName(id, listTitle)); //man måste vara inloggad för att den ska funka
+        }
 
-        // DELETE api/<ListController>/5
-        [HttpDelete("DeleteList")]
-        public IActionResult Delete(int id)
+        [HttpDelete("DeleteList/{id}")]
+        public IActionResult Delete(Guid id)
         {
 
             _listHandler.DeleteList(id);
-
             return Ok();
             
         }
+
+
+
+
 
 
 

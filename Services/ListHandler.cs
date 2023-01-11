@@ -2,6 +2,7 @@
 using System;
 using ToDoAPI.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using Task = ToDoAPI.Models.Task;
 
 namespace ToDoAPI.Services
 {
@@ -13,16 +14,18 @@ namespace ToDoAPI.Services
             _dbContext = dbContext;
         }
 
-        public CreateToDoList CreateNewToDoList(string listTitle)
+        public CreateToDoList CreateNewToDoList(Guid id,string listTitle)
         {
             var newList = new CreateToDoList()
             {
+                Id = Guid.NewGuid(),
+                CreateUserId = id,
                 ListTitle = listTitle,
-                //Task = new List<Task>(),
+                Task = new List<Task>(),
                 Date = DateTime.Now.ToString("G"),
                 ThisWeek = false,
                 Expired = false,
-                //Id = json[userId].ToDoList.Count + 1,
+                
             };
 
             _dbContext.ToDoLists.Add(newList);
@@ -35,28 +38,40 @@ namespace ToDoAPI.Services
             return _dbContext.ToDoLists.ToList();
         }
 
-        public void DeleteList(int id)
+        public void DeleteList(Guid id)
         {
 
-            var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.ListId == id);
+            var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
             _dbContext.ToDoLists.Remove(selectedList);
             _dbContext.SaveChanges();
         }
 
-        public CreateToDoList ChangeListName(int id, string listTitle)
+        public CreateToDoList ChangeListName(Guid id, string listTitle)
         {
-            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.ListId == id);
+            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
             list.ListTitle = listTitle;            
             _dbContext.SaveChanges();
             return list;
         }
 
 
-        public CreateToDoList ViewOneList(int id)
+        public CreateToDoList ViewOneList(Guid id)
         {
-            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.ListId == id);
+            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
+            //var tasks = _dbContext.ToDoLists.Include(task => task.ListId== id);
+            //var tasks = _dbContext.Task.First(x => x.ListId == id);
+
             return list;
         }
+
+        public IEnumerable<CreateToDoList> GetCurrentUsersLists(System.Security.Principal.IIdentity identity, string userId)
+        {
+
+            var lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId));
+            return lists;
+
+        }
+
 
 
 

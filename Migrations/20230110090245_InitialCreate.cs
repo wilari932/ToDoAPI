@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -16,8 +16,7 @@ namespace ToDoAPI.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     FirstName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LastName = table.Column<string>(type: "longtext", nullable: false)
@@ -42,25 +41,24 @@ namespace ToDoAPI.Migrations
                 name: "ToDoLists",
                 columns: table => new
                 {
-                    ListId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreateUserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     ListTitle = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Date = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ThisWeek = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Expired = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreateUserId = table.Column<int>(type: "int", nullable: true)
+                    Expired = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ToDoLists", x => x.ListId);
+                    table.PrimaryKey("PK_ToDoLists", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ToDoLists_User_CreateUserId",
                         column: x => x.CreateUserId,
                         principalTable: "User",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -68,28 +66,28 @@ namespace ToDoAPI.Migrations
                 name: "Task",
                 columns: table => new
                 {
-                    ListId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     TaskTitle = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Completed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreateToDoListListId = table.Column<int>(type: "int", nullable: true)
+                    CreateToDoListId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Task", x => x.ListId);
+                    table.PrimaryKey("PK_Task", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Task_ToDoLists_CreateToDoListListId",
-                        column: x => x.CreateToDoListListId,
+                        name: "FK_Task_ToDoLists_CreateToDoListId",
+                        column: x => x.CreateToDoListId,
                         principalTable: "ToDoLists",
-                        principalColumn: "ListId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Task_CreateToDoListListId",
+                name: "IX_Task_CreateToDoListId",
                 table: "Task",
-                column: "CreateToDoListListId");
+                column: "CreateToDoListId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ToDoLists_CreateUserId",

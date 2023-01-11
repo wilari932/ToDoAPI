@@ -6,13 +6,19 @@ namespace ToDoAPI.Models
     public class CreateToDoList
     {
         [Key]
-        public int ListId { get; set; }
-        public int UserId { get; set; } 
+        public Guid Id { get; set; }
+        [ForeignKey("CreateUserId")]   
+        public Guid CreateUserId { get; set; } 
         public string ListTitle { get; set; }
-        public List<Task> Task { get; set; }
+        public ICollection<Task> Task { get; set; }
         public string Date { get; set; }
         public bool ThisWeek { get; set; }
         public bool Expired { get; set; }
+
+        public CreateToDoList()
+        {
+            Task = new List<Task>();    
+        }
     
 
     }

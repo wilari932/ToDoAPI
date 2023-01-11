@@ -21,12 +21,12 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.CreateToDoList", b =>
                 {
-                    b.Property<int>("ListId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
-                    b.Property<int?>("CreateUserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Date")
                         .IsRequired()
@@ -42,10 +42,7 @@ namespace ToDoAPI.Migrations
                     b.Property<bool>("ThisWeek")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ListId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CreateUserId");
 
@@ -54,9 +51,9 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.CreateUser", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<bool>("AccessLevelAdm")
                         .HasColumnType("tinyint(1)");
@@ -94,23 +91,23 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.Task", b =>
                 {
-                    b.Property<int>("ListId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<bool>("Completed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("CreateToDoListListId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CreateToDoListId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("TaskTitle")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("ListId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CreateToDoListListId");
+                    b.HasIndex("CreateToDoListId");
 
                     b.ToTable("Task");
                 });
@@ -119,14 +116,18 @@ namespace ToDoAPI.Migrations
                 {
                     b.HasOne("ToDoAPI.Models.CreateUser", null)
                         .WithMany("ToDoList")
-                        .HasForeignKey("CreateUserId");
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.Task", b =>
                 {
                     b.HasOne("ToDoAPI.Models.CreateToDoList", null)
                         .WithMany("Task")
-                        .HasForeignKey("CreateToDoListListId");
+                        .HasForeignKey("CreateToDoListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ToDoAPI.Models.CreateToDoList", b =>

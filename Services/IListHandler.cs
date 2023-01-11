@@ -5,10 +5,11 @@ namespace ToDoAPI.Services
 {
     public interface IListHandler 
     {
-        CreateToDoList CreateNewToDoList(string listTitle);
+        CreateToDoList CreateNewToDoList(Guid id, string listTitle);
         IEnumerable <CreateToDoList> GetLists();
-        void DeleteList(int id);
-        CreateToDoList ChangeListName(int id, string value);
-        CreateToDoList ViewOneList(int id);
+        void DeleteList(Guid id);
+        CreateToDoList ChangeListName(Guid id, string value);
+        CreateToDoList ViewOneList(Guid id);
+        IEnumerable<CreateToDoList> GetCurrentUsersLists(System.Security.Principal.IIdentity identity, string userId);
     }
 }
