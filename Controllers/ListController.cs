@@ -33,9 +33,12 @@ namespace ToDoAPI.Controllers
         }
 
         [HttpPost("CreateNewToDoList")]
-        public IActionResult CreateNewToDoList(Guid id,string listTitle)
+        public IActionResult CreateNewToDoList(string listTitle)
         {
-            return Ok(_listHandler.CreateNewToDoList(id, listTitle));
+            var identity = HttpContext.User.Identity;
+            var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
+
+            return Ok(_listHandler.CreateNewToDoList(userId,listTitle));
         }
 
         [HttpGet("GetLists")]
@@ -56,18 +59,14 @@ namespace ToDoAPI.Controllers
         }
 
         [HttpPut("EditList")]
-        public IActionResult Put(Guid id, string listTitle)
+        public IActionResult Put(string listTitle)
         {
-            //var identity = HttpContext.User.Identity;
-            //var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
-            //var lists = _listHandler.GetLists();
-            return Ok(_listHandler.ChangeListName(id, listTitle)); //man måste vara inloggad för att den ska funka
+            return Ok(_listHandler.ChangeListName(listTitle)); 
         }
 
-        [HttpDelete("DeleteList/{id}")]
-        public IActionResult Delete(Guid id)
+        [HttpDelete("DeleteList")]
+        public IActionResult Delete(Guid? id)
         {
-
             _listHandler.DeleteList(id);
             return Ok();
             

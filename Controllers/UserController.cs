@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using ToDoAPI.Services;
 
 namespace ToDoAPI.Controllers
@@ -27,9 +28,14 @@ namespace ToDoAPI.Controllers
             return Ok(_userHandler.CreateUser(firstname, lastname, username, email, password));
         }
 
-        [HttpPost("DeleteUser/{id}")]
-        public IActionResult DeleteUser(Guid id)
+        [HttpPost("DeleteUser")]
+        public IActionResult DeleteUser(Guid? id)
         {
+
+            if (id == null)
+            {
+                id = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value);
+            }
             _userHandler.DeleteUser(id);
 
             return Ok();

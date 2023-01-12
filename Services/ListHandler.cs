@@ -14,12 +14,13 @@ namespace ToDoAPI.Services
             _dbContext = dbContext;
         }
 
-        public CreateToDoList CreateNewToDoList(Guid id,string listTitle)
+        public CreateToDoList CreateNewToDoList(string id, string listTitle)
         {
+
             var newList = new CreateToDoList()
             {
                 Id = Guid.NewGuid(),
-                CreateUserId = id,
+                CreateUserId = Guid.Parse(id),
                 ListTitle = listTitle,
                 Task = new List<Task>(),
                 Date = DateTime.Now.ToString("G"),
@@ -38,17 +39,32 @@ namespace ToDoAPI.Services
             return _dbContext.ToDoLists.ToList();
         }
 
-        public void DeleteList(Guid id)
+        public void DeleteList(Guid? id)
         {
+            if (id == null)
+            {
+                var listID = Guid.Parse(ListDictionary.id["ListId"]);
+                var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == listID);
+                _dbContext.ToDoLists.Remove(selectedList);
+                _dbContext.SaveChanges();
+                return;
+            }
+            else
+            {
+                var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
+                _dbContext.ToDoLists.Remove(selectedList);
+                _dbContext.SaveChanges();
+                return;
+            }
 
-            var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
-            _dbContext.ToDoLists.Remove(selectedList);
-            _dbContext.SaveChanges();
+
         }
 
-        public CreateToDoList ChangeListName(Guid id, string listTitle)
+        public CreateToDoList ChangeListName(string listTitle)
         {
-            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
+            var listID = Guid.Parse(ListDictionary.id["ListId"]);
+
+            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == listID);
             list.ListTitle = listTitle;            
             _dbContext.SaveChanges();
             return list;
@@ -57,19 +73,15 @@ namespace ToDoAPI.Services
 
         public CreateToDoList ViewOneList(Guid id)
         {
+            ListDictionary.id["ListId"] = id.ToString();
             var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
-            //var tasks = _dbContext.ToDoLists.Include(task => task.ListId== id);
-            //var tasks = _dbContext.Task.First(x => x.ListId == id);
-
             return list;
         }
 
         public IEnumerable<CreateToDoList> GetCurrentUsersLists(System.Security.Principal.IIdentity identity, string userId)
         {
-
             var lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId));
             return lists;
-
         }
 
 

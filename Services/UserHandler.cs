@@ -35,7 +35,7 @@ namespace ToDoAPI.Services
         }
 
 
-        public void DeleteUser(Guid id)
+        public void DeleteUser(Guid? id)
         {
             var user = _dbContext.User.FirstOrDefault(x => x.Id == id);
             _dbContext.User.Remove(user);

@@ -13,22 +13,23 @@ namespace ToDoAPI.Services
             _dbContext = dbContext;
         }
 
-        public CreateToDoList AddTask(Guid id, string title)
+        public CreateToDoList AddTask(string title)
         {
-            var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
+            //var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
 
+            var listID = Guid.Parse(ListDictionary.id["ListId"]);            
             var task = new Task()
             {
                 TaskTitle = title,
                 Completed = false,
-                CreateToDoListId = id,
+                CreateToDoListId = listID,
                 Id = Guid.NewGuid()
             };
 
             _dbContext.Task.Add(task);  
             _dbContext.SaveChanges();
 
-            return _dbContext.ToDoLists.Include(x => x.Task).FirstOrDefault(x => x.Id == id);
+            return _dbContext.ToDoLists.Include(x => x.Task).FirstOrDefault(x => x.Id == listID);
 
         }
 
@@ -41,21 +42,41 @@ namespace ToDoAPI.Services
 
         }
 
-        public Task EditTaskName(Guid id, string taskTitle)
+        public Task EditTaskName(string taskTitle)
         {
-            var task = _dbContext.Task.FirstOrDefault(x => x.Id == id);
+            var taskId = Guid.Parse(ListDictionary.id["TaskId"]);
+            var task = _dbContext.Task.FirstOrDefault(x => x.Id == taskId);
+
             task.TaskTitle = taskTitle;
             _dbContext.SaveChanges();
             return task;
         }
 
-
-        public void DeleteTask(Guid id)
+        
+        public void DeleteTask()
         {
+            var taskId = Guid.Parse(ListDictionary.id["TaskId"]);
 
-            var task = _dbContext.Task.FirstOrDefault(x => x.Id == id);
+            var task = _dbContext.Task.FirstOrDefault(x => x.Id == taskId);
             _dbContext.Remove(task);
             _dbContext.SaveChanges();
+        }
+
+        public Task GetSingelTask(Guid id)
+        {
+            ListDictionary.id["TaskId"] = id.ToString();
+            var task = _dbContext.Task.FirstOrDefault(x => x.Id == id);
+            return task;
+        }
+
+
+        public Task MarkAsComplete(bool completed)
+        {
+            var taskId = Guid.Parse(ListDictionary.id["TaskId"]);
+            var task = _dbContext.Task.FirstOrDefault(x => x.Id == taskId);
+            task.Completed = !task.Completed;
+            _dbContext.SaveChanges();
+            return task;
         }
 
 

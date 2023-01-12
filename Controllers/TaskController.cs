@@ -18,10 +18,10 @@ namespace ToDoAPI.Controllers
 
         }
 
-        [HttpPost("AddTask/{id}")]
-        public IActionResult AddTask(Guid id, string taskTitle)
+        [HttpPost("AddTask")]
+        public IActionResult AddTask(string taskTitle)
         {
-            return Ok(_taskHandler.AddTask(id, taskTitle));
+            return Ok(_taskHandler.AddTask(taskTitle));
         }
 
         [HttpPost("GetTasks")]
@@ -30,17 +30,29 @@ namespace ToDoAPI.Controllers
             return Ok(_taskHandler.GetTasks(id));
         }
 
-        [HttpPut("EditTask/{id}")]
-        public IActionResult EditTaskName(Guid id, string taskTitle)
+        [HttpPut("EditTask")]
+        public IActionResult EditTaskName(string taskTitle)
         {
-            return Ok(_taskHandler.EditTaskName(id, taskTitle));
+            return Ok(_taskHandler.EditTaskName(taskTitle));
         }
 
-        [HttpDelete("DeleteTask/{id}")]
-        public IActionResult DeleteTask(Guid id)
+        [HttpGet("GetSingelTask")]
+        public IActionResult GetSingelTask(Guid id)
         {
-            _taskHandler.DeleteTask(id);
+            return Ok(_taskHandler.GetSingelTask(id));
+        }
+
+        [HttpDelete("DeleteTask")]
+        public IActionResult DeleteTask()
+        {
+            _taskHandler.DeleteTask();
             return Ok();
+        }
+
+        [HttpPut("Completed")]
+        public IActionResult MarkAsComplete(bool completed)
+        {
+            return Ok(_taskHandler.MarkAsComplete(completed));
         }
 
 

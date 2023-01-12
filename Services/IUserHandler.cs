@@ -5,7 +5,7 @@ namespace ToDoAPI.Services
     public interface IUserHandler
     {
         CreateUser CreateUser(string FirstName, string LastName, string UserName, string Email, string Password);
-        void DeleteUser(Guid id);
+        void DeleteUser(Guid? id);
         CreateUser GetOneUser(Guid id);
         IEnumerable<CreateUser> GetUsers();
 
