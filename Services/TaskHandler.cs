@@ -15,8 +15,6 @@ namespace ToDoAPI.Services
 
         public CreateToDoList AddTask(string title)
         {
-            //var selectedList = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
-
             var listID = Guid.Parse(ListDictionary.id["ListId"]);            
             var task = new Task()
             {
@@ -28,25 +26,20 @@ namespace ToDoAPI.Services
 
             _dbContext.Task.Add(task);  
             _dbContext.SaveChanges();
-
             return _dbContext.ToDoLists.Include(x => x.Task).FirstOrDefault(x => x.Id == listID);
-
         }
 
 
         public IEnumerable<Task> GetTasks(Guid id)
         {
             var tasks = _dbContext.Task.Where(x => x.CreateToDoListId == id);
-
             return tasks;
-
         }
 
         public Task EditTaskName(string taskTitle)
         {
             var taskId = Guid.Parse(ListDictionary.id["TaskId"]);
             var task = _dbContext.Task.FirstOrDefault(x => x.Id == taskId);
-
             task.TaskTitle = taskTitle;
             _dbContext.SaveChanges();
             return task;
@@ -56,7 +49,6 @@ namespace ToDoAPI.Services
         public void DeleteTask()
         {
             var taskId = Guid.Parse(ListDictionary.id["TaskId"]);
-
             var task = _dbContext.Task.FirstOrDefault(x => x.Id == taskId);
             _dbContext.Remove(task);
             _dbContext.SaveChanges();

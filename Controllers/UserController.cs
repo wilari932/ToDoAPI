@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ToDoAPI.Models;
 using ToDoAPI.Services;
 
 namespace ToDoAPI.Controllers
@@ -59,6 +60,13 @@ namespace ToDoAPI.Controllers
         public IActionResult EditProfile(Guid id, string? firstName, string? lastName, string? email, string? password)
         {
             return Ok(_userHandler.EditProfile(id, firstName, lastName, email, password));
+        }
+
+
+        [HttpPut("ChangeAccess/{id}")]
+        public IActionResult ChangeAccess(Guid id, Access access)
+        {
+            return Ok(_userHandler.ChangeAccess(id, access));
         }
 
 

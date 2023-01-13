@@ -25,7 +25,6 @@ namespace ToDoAPI.Controllers
             _dbContext = context;
         }
 
-
         [HttpGet("OneList")]
         public IActionResult Get(Guid id)
         {
@@ -37,7 +36,6 @@ namespace ToDoAPI.Controllers
         {
             var identity = HttpContext.User.Identity;
             var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
-
             return Ok(_listHandler.CreateNewToDoList(userId,listTitle));
         }
 
@@ -47,15 +45,12 @@ namespace ToDoAPI.Controllers
             return Ok(_listHandler.GetLists());
         }
 
-
         [HttpGet("GetCurrentUserLists")]
         public IActionResult GetCurrentUserLists()
         {
             var identity = HttpContext.User.Identity;
             var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
-
             return Ok(_listHandler.GetCurrentUsersLists(identity, userId));
-
         }
 
         [HttpPut("EditList")]
@@ -68,13 +63,23 @@ namespace ToDoAPI.Controllers
         public IActionResult Delete(Guid? id)
         {
             _listHandler.DeleteList(id);
-            return Ok();
-            
+            return Ok();   
+        }
+
+        [HttpPut("SortLists")]
+        public IActionResult SortLists(Sort option)
+        {
+            var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
+            return Ok(_listHandler.SortLists(option, userId));
         }
 
 
+        [HttpPut("WeeklyList")]
+        public IActionResult WeeklyList(Guid? id)
+        {
 
-
+            return Ok(_listHandler.WeeklyList(id));
+        }
 
 
 

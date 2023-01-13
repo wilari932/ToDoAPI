@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Reflection.Metadata.Ecma335;
 using ToDoAPI.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using Task = ToDoAPI.Models.Task;
@@ -16,7 +17,6 @@ namespace ToDoAPI.Services
 
         public CreateToDoList CreateNewToDoList(string id, string listTitle)
         {
-
             var newList = new CreateToDoList()
             {
                 Id = Guid.NewGuid(),
@@ -56,14 +56,11 @@ namespace ToDoAPI.Services
                 _dbContext.SaveChanges();
                 return;
             }
-
-
         }
 
         public CreateToDoList ChangeListName(string listTitle)
         {
             var listID = Guid.Parse(ListDictionary.id["ListId"]);
-
             var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == listID);
             list.ListTitle = listTitle;            
             _dbContext.SaveChanges();
@@ -80,8 +77,40 @@ namespace ToDoAPI.Services
 
         public IEnumerable<CreateToDoList> GetCurrentUsersLists(System.Security.Principal.IIdentity identity, string userId)
         {
-            var lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId));
+            var lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).ToList();
             return lists;
+        }
+
+        public IEnumerable<CreateToDoList> SortLists(Sort option, string userId)
+        {
+            var lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).ToList().OrderBy(x => x.Date);  
+            //if (option == Sort.Name) // Funkar, men toList?
+            //{
+            //    lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).OrderBy(x => x.ListTitle);
+            //}
+            //if (option == Sort.Descending) 
+            //{
+            //    lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).OrderBy(x => x.Date);
+            //}  
+            //if (option == Sort.Ascending)
+            //{
+            //    lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).OrderByDescending(x => x.Date);
+            //}
+            _dbContext.SaveChanges();
+            return lists;
+        }
+
+
+        public CreateToDoList WeeklyList(Guid? id)
+        {
+            if(id == null)
+            {
+                id = Guid.Parse(ListDictionary.id["ListId"]);
+            }
+            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
+            list.ThisWeek = true;
+            _dbContext.SaveChanges();
+            return list;
         }
 
 

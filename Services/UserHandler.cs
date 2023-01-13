@@ -22,16 +22,13 @@ namespace ToDoAPI.Services
                 UserName = UserName,
                 Email = Email,
                 Password = Password,
-                AccessLevelOne = true,
-                AccessLevelMod = false,
-                AccessLevelAdm = false,
+                Access = Access.User,
                 ToDoList = new List<CreateToDoList>()
             };
 
             _dbContext.Add(user);
             _dbContext.SaveChanges();
             return user;
-
         }
 
 
@@ -47,13 +44,10 @@ namespace ToDoAPI.Services
             var user = _dbContext.User.FirstOrDefault(x => x.Id == id);
             return user;
         }
-
         public IEnumerable<CreateUser> GetUsers()
         {
             return _dbContext.User.ToList();
         }
-
-
         public CreateUser EditProfile(Guid id, string? firstName, string? lastName, string? email, string? password)
         {
             var user = _dbContext.User.FirstOrDefault(x => x.Id == id);
@@ -69,11 +63,15 @@ namespace ToDoAPI.Services
         public async Task<CreateUser> Authenticate(string username, string password)
         {
             var user = _dbContext.User.SingleOrDefault(x => x.UserName == username && x.Password == password);
-
-
             return user;
+        }
 
-
+        public CreateUser ChangeAccess(Guid id, Access access)
+        {
+            var user = _dbContext.User.FirstOrDefault(x => x.Id == id);
+            user.Access = access;
+            _dbContext.SaveChanges();
+            return user;
         }
 
 
