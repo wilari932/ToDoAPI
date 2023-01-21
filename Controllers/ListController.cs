@@ -25,13 +25,13 @@ namespace ToDoAPI.Controllers
             _dbContext = context;
         }
 
-        [HttpGet("OneList")]
+        [HttpGet("/OneList")]
         public IActionResult Get(Guid id)
         {
             return Ok(_listHandler.ViewOneList(id));
         }
 
-        [HttpPost("CreateNewToDoList")]
+        [HttpPost("/CreateNewToDoList")]
         public IActionResult CreateNewToDoList(string listTitle)
         {
             var identity = HttpContext.User.Identity;
