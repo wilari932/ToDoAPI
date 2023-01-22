@@ -39,6 +39,7 @@ namespace ToDoAPI.Controllers
             return Ok(_listHandler.CreateNewToDoList(userId,listTitle));
         }
 
+        [AllowAnonymous]
         [HttpGet("/GetAllLists")]
         public IActionResult Get()
         {

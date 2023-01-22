@@ -6,7 +6,7 @@ namespace ToDoAPI.Services
     public interface IListHandler 
     {
         CreateToDoList CreateNewToDoList(string id, string listTitle);
-        IEnumerable <CreateToDoList> GetLists();
+        IEnumerable<CreateToDoList> GetLists();
         void DeleteList(Guid? id);
         CreateToDoList ChangeListName(string value);
         CreateToDoList ViewOneList(Guid id);
