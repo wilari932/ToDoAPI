@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoAPI", "ToDoAPI.csproj",
 		{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8} = {BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAppz", "..\BlazorAppz\BlazorAppz.csproj", "{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAppz", "..\BlazorAppz\BlazorAppz.csproj", "{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

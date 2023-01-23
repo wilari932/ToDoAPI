@@ -9,7 +9,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace ToDoAPI.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class ListController : ControllerBase
@@ -25,13 +25,13 @@ namespace ToDoAPI.Controllers
             _dbContext = context;
         }
 
-        [HttpGet("/OneList")]
+        [HttpGet("OneList")]
         public IActionResult Get(Guid id)
         {
             return Ok(_listHandler.ViewOneList(id));
         }
 
-        [HttpPost("/CreateNewToDoList")]
+        [HttpPost("CreateNewToDoList")]
         public IActionResult CreateNewToDoList(string listTitle)
         {
             var identity = HttpContext.User.Identity;
@@ -39,8 +39,8 @@ namespace ToDoAPI.Controllers
             return Ok(_listHandler.CreateNewToDoList(userId,listTitle));
         }
 
-        [AllowAnonymous]
-        [HttpGet("/GetAllLists")]
+       
+        [HttpGet("GetAllLists")]
         public IActionResult Get()
         {
           

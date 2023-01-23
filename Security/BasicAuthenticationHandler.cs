@@ -26,7 +26,7 @@ namespace ToDoAPI.Security
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var path = Request.Path.ToString();
-            if(path == $"/api/User/CreateUser")
+            if (path == $"/api/User/CreateUser")
             {
                 return AuthenticateResult.NoResult();
             }

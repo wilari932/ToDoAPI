@@ -6,7 +6,7 @@ using ToDoAPI.Services;
 
 namespace ToDoAPI.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller
@@ -50,7 +50,8 @@ namespace ToDoAPI.Controllers
         }
 
 
-        [HttpGet("GetUsers")]
+        [AllowAnonymous]
+        [HttpGet("GetAllUsers")]
         public IActionResult Get()
         {
             return Ok(_userHandler.GetUsers());
@@ -67,6 +68,35 @@ namespace ToDoAPI.Controllers
         public IActionResult ChangeAccess(Guid id, Access access)
         {
             return Ok(_userHandler.ChangeAccess(id, access));
+        }
+
+
+
+
+        [AllowAnonymous]
+        [HttpPost("Login")]
+        public IActionResult Login()
+        {
+            var user = Request.ReadFromJsonAsync<CreateUser>().Result;
+
+            try
+            {
+                return Ok(_userHandler.Authenticate(user.UserName, user.Password).Result);
+            }
+            catch (Exception e) when (e.InnerException is InvalidOperationException)
+            {
+                return BadRequest("Username and Password is required");
+            }
+            catch (Exception e) when (e.InnerException is UnauthorizedAccessException)
+            {
+                return BadRequest("Invalid login");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong with creating the token");
+            }
+
+
         }
 
 
