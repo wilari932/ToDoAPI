@@ -22,12 +22,41 @@ namespace ToDoAPI.Controllers
             _dbContext = context;
         }
 
+        //[AllowAnonymous]
+        //[HttpPost("CreateUser")]
+        //public IActionResult CreateUser(string firstname, string lastname, string username, string email, string password)
+        //{
+        //    return Ok(_userHandler.CreateUser(firstname, lastname, username, email, password));  // vanliga
+        //}
+
+
         [AllowAnonymous]
         [HttpPost("CreateUser")]
-        public IActionResult CreateUser(string firstname, string lastname, string username, string email, string password)
+        public IActionResult CreateUser()
         {
-            return Ok(_userHandler.CreateUser(firstname, lastname, username, email, password));
+           var user = Request.ReadFromJsonAsync<CreateUser>().Result;
+
+            //return Ok(_userHandler.CreateUser(newUser));
+
+
+            try
+            {
+                return Ok(_userHandler.CreateUser(user).Result);
+            }
+            catch (Exception e) when (e.InnerException is InvalidOperationException)
+            {
+                return BadRequest("Username and Password is required");
+            }
+            catch (Exception e) when (e.InnerException is UnauthorizedAccessException)
+            {
+                return BadRequest("Invalid login");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Something went wrong with creating the token");
+            }
         }
+
 
         [HttpPost("DeleteUser")]
         public IActionResult DeleteUser(Guid? id)

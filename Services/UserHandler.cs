@@ -12,23 +12,12 @@ namespace ToDoAPI.Services
             _dbContext = dbContext;
         }
 
-        public CreateUser CreateUser(string FirstName, string LastName, string UserName, string Email, string Password)
-        {
-            var user = new CreateUser()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = FirstName,
-                LastName = LastName,
-                UserName = UserName,
-                Email = Email,
-                Password = Password,
-                Access = Access.User,
-                ToDoList = new List<CreateToDoList>()
-            };
 
+        public async Task<CreateUser> CreateUser(CreateUser user)
+        {
             _dbContext.Add(user);
             _dbContext.SaveChanges();
-            return user;
+            return  user;
         }
 
 
