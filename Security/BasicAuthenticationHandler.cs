@@ -26,7 +26,7 @@ namespace ToDoAPI.Security
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var path = Request.Path.ToString();
-            if (path == $"/api/User/CreateUser")
+            if (path == $"/api/User/CreateUser" || path == $"/api/User/EditProfile")
             {
                 return AuthenticateResult.NoResult();
             }
@@ -45,6 +45,7 @@ namespace ToDoAPI.Security
                     throw new UnauthorizedAccessException();
                 }
                 userId = user.Id;
+                UserDictionary.userId["UserId"] = user.Id.ToString();  //test
             }
             catch (Exception)
             {

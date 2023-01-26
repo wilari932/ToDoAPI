@@ -13,19 +13,20 @@ namespace ToDoAPI.Services
         }
 
 
-        public async Task<CreateUser> CreateUser(CreateUser user)
+        public async Task<CreateUser> CreateUser(CreateUser user)         //Funkar
         {
             _dbContext.Add(user);
             _dbContext.SaveChanges();
-            return  user;
+            return user;
         }
 
 
-        public void DeleteUser(Guid? id)
+        public async Task<CreateUser> DeleteUser (CreateUser user)
         {
-            var user = _dbContext.User.FirstOrDefault(x => x.Id == id);
-            _dbContext.User.Remove(user);
+            var deleteUser = _dbContext.User.FirstOrDefault(x => x.UserName == user.UserName);
+            _dbContext.User.Remove(deleteUser);
             _dbContext.SaveChanges();
+            return deleteUser;
         }
 
         public CreateUser GetOneUser(Guid id)
@@ -33,25 +34,29 @@ namespace ToDoAPI.Services
             var user = _dbContext.User.FirstOrDefault(x => x.Id == id);
             return user;
         }
-        public IEnumerable<CreateUser> GetUsers()
+        public IEnumerable<CreateUser> GetUsers()                         //Funkar
         {
             return _dbContext.User.ToList();
         }
-        public CreateUser EditProfile(Guid id, string? firstName, string? lastName, string? email, string? password)
+
+
+        public async Task<CreateUser> EditProfile(CreateUser user)    //Funkar
         {
-            var user = _dbContext.User.FirstOrDefault(x => x.Id == id);
-            user.FirstName = firstName == null ? user.FirstName : firstName;
-            user.LastName = lastName == null ? user.LastName : lastName;
-            user.Email = email == null ? user.Email : email;
-            user.Password = password == null ? user.Password : password;
+            CreateUser theUser = _dbContext.User.FirstOrDefault(x => x.UserName == user.UserName);
+            theUser.FirstName = user.FirstName ?? theUser.FirstName;
+            theUser.LastName = user.LastName ?? theUser.LastName;
+            theUser.Email = user.Email ?? theUser.Email;
+            theUser.Password = user.Password ?? theUser.FirstName;
+            theUser.UserName = user.UserName ?? theUser.UserName;
             _dbContext.SaveChanges();
             return user;
         }
 
 
-        public async Task<CreateUser> Authenticate(string username, string password)
+        public async Task<CreateUser> Authenticate(string username, string password)         //Funkar
         {
             var user = _dbContext.User.SingleOrDefault(x => x.UserName == username && x.Password == password);
+            UserDictionary.userId["UserId"] = user.Id.ToString();  //Funkar
             return user;
         }
 

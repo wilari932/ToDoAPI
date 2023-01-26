@@ -32,9 +32,9 @@ namespace ToDoAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("CreateUser")]
-        public IActionResult CreateUser()
+        public IActionResult CreateUser()                                          //Funkar
         {
-           var user = Request.ReadFromJsonAsync<CreateUser>().Result;
+            var user = Request.ReadFromJsonAsync<CreateUser>().Result;
 
             //return Ok(_userHandler.CreateUser(newUser));
 
@@ -58,18 +58,35 @@ namespace ToDoAPI.Controllers
         }
 
 
-        [HttpPost("DeleteUser")]
-        public IActionResult DeleteUser(Guid? id)
-        {
 
-            if (id == null)
-            {
-                id = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value);
-            }
-            _userHandler.DeleteUser(id);
+        //[AllowAnonymous]
+        //[HttpPost("DeleteUser")]
+        //public IActionResult DeleteUser()
+        //{
+        //   var user = Request.ReadFromJsonAsync<CreateUser>().Result;
 
-            return Ok();
-        }
+        //    try
+        //    {
+        //        return Ok(_userHandler.DeleteUser(user).Result);
+        //    }
+        //    catch (Exception e) when (e.InnerException is InvalidOperationException)
+        //    {
+        //        return BadRequest("Username and Password is required");
+        //    }
+        //    catch (Exception e) when (e.InnerException is UnauthorizedAccessException)
+        //    {
+        //        return BadRequest("Invalid login");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest("Something went wrong with creating the token");
+        //    }
+        //    //if (user == null)
+        //    //{
+        //    //    user = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value);
+        //    //}
+
+        //}
 
 
         [HttpGet("GetOneUser/{id}")]
@@ -86,10 +103,15 @@ namespace ToDoAPI.Controllers
             return Ok(_userHandler.GetUsers());
         }
 
-        [HttpPut("EditProfile/{id}")]
-        public IActionResult EditProfile(Guid id, string? firstName, string? lastName, string? email, string? password)
+
+        [AllowAnonymous]
+        [HttpPut("EditProfile")]
+        public IActionResult EditProfile()
         {
-            return Ok(_userHandler.EditProfile(id, firstName, lastName, email, password));
+
+            var user = Request.ReadFromJsonAsync<CreateUser>().Result;
+            return Ok(_userHandler.EditProfile(user).Result);
+
         }
 
 
