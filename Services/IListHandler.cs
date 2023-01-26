@@ -13,7 +13,6 @@ namespace ToDoAPI.Services
         CreateToDoList ChangeListName(string value);
         CreateToDoList ViewOneList(Guid id);
         CreateToDoList WeeklyList(Guid? id);
-        IEnumerable<CreateToDoList> SortLists(Sort option, string id);
         IEnumerable<CreateToDoList> GetCurrentUsersLists();
 
         //IEnumerable<CreateToDoList> GetCurrentUsersLists(System.Security.Principal.IIdentity identity, string userId);  //Gamla
