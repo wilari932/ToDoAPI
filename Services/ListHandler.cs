@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using System;
+using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using ToDoAPI.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
@@ -16,34 +17,14 @@ namespace ToDoAPI.Services
             _dbContext = dbContext;
         }
 
-        //public CreateToDoList CreateNewToDoList(string id, string listTitle)
-        //{
-        //    var newList = new CreateToDoList()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        CreateUserId = Guid.Parse(id),
-        //        ListTitle = listTitle,
-        //        Task = new List<Task>(),
-        //        Date = DateTime.Now.ToString("G"),
-        //        ThisWeek = false,
-        //        Expired = false,
-
-        //    };
-
-        //    _dbContext.ToDoLists.Add(newList);
-        //    _dbContext.SaveChanges();   
-        //    return newList; 
-        //}
-        public Guid GetRecentViewedList()    
+        public Guid GetRecentViewedList()    //Funkar
         {
             Guid listId = Guid.Parse(ListDictionary.id["ListId"]);
-
             return listId;
         }
 
         public IEnumerable<CreateToDoList> GetLists()    //Funkar
         {
-
             return _dbContext.ToDoLists.ToList();
         }
 
@@ -86,10 +67,10 @@ namespace ToDoAPI.Services
         }
 
 
-        public CreateToDoList ViewOneList(Guid id)
+        public CreateToDoList ViewOneList(Guid id)   //Funkar
         {
-            //ListDictionary.id["ListId"] = id.ToString();
-            var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == id);
+            ListDictionary.id["ListId"] = id.ToString();
+            var list = _dbContext.ToDoLists.Include(x => x.Task).FirstOrDefault(x => x.Id == id);
             return list;
         }
 
@@ -99,25 +80,6 @@ namespace ToDoAPI.Services
             var lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == userId).ToList();
             return lists;
         }
-
-        //public IEnumerable<CreateToDoList> SortLists(Sort option, string userId)
-        //{
-        //    var lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).ToList().OrderBy(x => x.Date);  
-        //    //if (option == Sort.Name) // Funkar, men toList?
-        //    //{
-        //    //    lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).OrderBy(x => x.ListTitle);
-        //    //}
-        //    //if (option == Sort.Descending) 
-        //    //{
-        //    //    lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).OrderBy(x => x.Date);
-        //    //}  
-        //    //if (option == Sort.Ascending)
-        //    //{
-        //    //    lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == Guid.Parse(userId)).OrderByDescending(x => x.Date);
-        //    //}
-        //    _dbContext.SaveChanges();
-        //    return lists;
-        //}
 
 
         public CreateToDoList WeeklyList(Guid? id)

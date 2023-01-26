@@ -25,40 +25,26 @@ namespace ToDoAPI.Controllers
             _dbContext = context;
         }
 
-        [HttpGet("ShowList/{id}")]
+        [HttpGet("ShowList/{id}")]  //Funkar
         public IActionResult Get(Guid id)
         {
             return Ok(_listHandler.ViewOneList(id));
         }
 
         [HttpGet("ViewSingleList")]
-        public IActionResult GetRecentViewedList()
+        public IActionResult GetRecentViewedList()   // ??oklar, metoden funkar men addressen
         {
             return Ok(_listHandler.GetRecentViewedList());
         }
 
-        //[HttpPost("CreateNewToDoList")]
-        //public IActionResult CreateNewToDoList(string listTitle)
-        //{
-        //    var identity = HttpContext.User.Identity;
-        //    var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
-
-        //    return Ok(_listHandler.CreateNewToDoList(userId, listTitle));
-        //}
-
-
-        [HttpPost("CreateNewToDoList")]
+        [HttpPost("CreateNewToDoList")]  //Funkar
         public IActionResult CreateNewToDoList(CreateToDoList list)
         {
-
-            //var identity = HttpContext.User.Identity;
-            //var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
-
             return Ok(_listHandler.CreateNewToDoList(list));
         }
 
 
-        [HttpGet("GetAllLists")]
+        [HttpGet("GetAllLists")]  //Funkar
         public IActionResult Get()
         {
           
@@ -85,13 +71,6 @@ namespace ToDoAPI.Controllers
         //    _listHandler.DeleteList(id);
         //    return Ok();   
         //}
-
-        [HttpPut("SortLists")]
-        public IActionResult SortLists(Sort option)
-        {
-            var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
-            return Ok(_listHandler.SortLists(option, userId));
-        }
 
 
         [HttpPut("WeeklyList")]
