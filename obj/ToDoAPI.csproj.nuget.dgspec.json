@@ -1,27 +1,35 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\elinr\\source\\repos\\ToDoAPI\\ToDoAPI.csproj": {}
+    "C:\\Users\\WilmarArias\\Documents\\Ellin\\ToDoAPI\\ToDoAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\elinr\\source\\repos\\ToDoAPI\\ToDoAPI.csproj": {
+    "C:\\Users\\WilmarArias\\Documents\\Ellin\\ToDoAPI\\ToDoAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\elinr\\source\\repos\\ToDoAPI\\ToDoAPI.csproj",
+        "projectUniqueName": "C:\\Users\\WilmarArias\\Documents\\Ellin\\ToDoAPI\\ToDoAPI.csproj",
         "projectName": "ToDoAPI",
-        "projectPath": "C:\\Users\\elinr\\source\\repos\\ToDoAPI\\ToDoAPI.csproj",
-        "packagesPath": "C:\\Users\\elinr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\elinr\\source\\repos\\ToDoAPI\\obj\\",
+        "projectPath": "C:\\Users\\WilmarArias\\Documents\\Ellin\\ToDoAPI\\ToDoAPI.csproj",
+        "packagesPath": "C:\\Users\\WilmarArias\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\WilmarArias\\Documents\\Ellin\\ToDoAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\elinr\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\WilmarArias\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -78,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100-rc.2.22477.23\\RuntimeIdentifierGraph.json"
         }
       }
     }

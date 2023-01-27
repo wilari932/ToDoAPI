@@ -4,11 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoAPI", "ToDoAPI.csproj", "{E3E056A8-0085-4486-940F-E975D235B437}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8} = {BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}
-	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAppz", "..\BlazorAppz\BlazorAppz.csproj", "{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAppz", "..\BlazorToDo\BlazorAppz.csproj", "{C645D087-8D79-4F25-8304-FE282A892CAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +17,10 @@ Global
 		{E3E056A8-0085-4486-940F-E975D235B437}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E056A8-0085-4486-940F-E975D235B437}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E056A8-0085-4486-940F-E975D235B437}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB6CDCF0-9C1A-4FDC-8E6C-E9B7BF3449A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C645D087-8D79-4F25-8304-FE282A892CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C645D087-8D79-4F25-8304-FE282A892CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C645D087-8D79-4F25-8304-FE282A892CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C645D087-8D79-4F25-8304-FE282A892CAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
