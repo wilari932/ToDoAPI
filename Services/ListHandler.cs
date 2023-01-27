@@ -57,7 +57,7 @@ namespace ToDoAPI.Services
         //    }
         //}
 
-        public CreateToDoList ChangeListName(string listTitle)
+        public CreateToDoList EditList(string listTitle)
         {
             var listID = Guid.Parse(ListDictionary.id["ListId"]);
             var list = _dbContext.ToDoLists.FirstOrDefault(x => x.Id == listID);
@@ -74,7 +74,7 @@ namespace ToDoAPI.Services
             return list;
         }
 
-        public IEnumerable<CreateToDoList> GetCurrentUsersLists()   //Funkar
+        public IEnumerable<CreateToDoList> GetCurrentUsersLists()   //Funkar, slår unreq
         {
             var userId = Guid.Parse(UserDictionary.userId["UserId"]);
             var lists = _dbContext.ToDoLists.Where(x => x.CreateUserId == userId).ToList();

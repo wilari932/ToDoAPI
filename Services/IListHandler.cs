@@ -10,7 +10,7 @@ namespace ToDoAPI.Services
         IEnumerable<CreateToDoList> GetLists();   //Funkar
         Guid GetRecentViewedList();
         //void DeleteList(Guid? id);
-        CreateToDoList ChangeListName(string value);
+        CreateToDoList EditList(string listTitle);
         CreateToDoList ViewOneList(Guid id);
         CreateToDoList WeeklyList(Guid? id);
         IEnumerable<CreateToDoList> GetCurrentUsersLists();

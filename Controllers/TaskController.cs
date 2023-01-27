@@ -4,7 +4,7 @@ using ToDoAPI.Services;
 
 namespace ToDoAPI.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
@@ -18,10 +18,10 @@ namespace ToDoAPI.Controllers
 
         }
 
-        [HttpPost("AddTask")]
-        public IActionResult AddTask(string taskTitle)
+        [HttpPost("AddTask")]    //Funkar
+        public IActionResult AddTask(ToDoAPI.Models.Task task)
         {
-            return Ok(_taskHandler.AddTask(taskTitle));
+            return Ok(_taskHandler.AddTask(task));
         }
 
         [HttpPost("GetTasks")]
@@ -42,11 +42,11 @@ namespace ToDoAPI.Controllers
             return Ok(_taskHandler.GetSingelTask(id));
         }
 
-        [HttpDelete("DeleteTask")]
-        public IActionResult DeleteTask()
+        [HttpDelete("DeleteTask/{id}")]  //Funkar
+        public IActionResult DeleteTask(Guid id)
         {
-            _taskHandler.DeleteTask();
-            return Ok();
+           
+            return Ok(_taskHandler.DeleteTask(id));
         }
 
         [HttpPut("Completed")]

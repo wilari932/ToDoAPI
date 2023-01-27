@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using ToDoAPI.Models;
 using Task = ToDoAPI.Models.Task;
 
@@ -13,18 +14,10 @@ namespace ToDoAPI.Services
             _dbContext = dbContext;
         }
 
-        public CreateToDoList AddTask(string title)
+        public CreateToDoList AddTask(Task task)   
         {
-            var listID = Guid.Parse(ListDictionary.id["ListId"]);            
-            var task = new Task()
-            {
-                TaskTitle = title,
-                Completed = false,
-                CreateToDoListId = listID,
-                Id = Guid.NewGuid()
-            };
-
-            _dbContext.Task.Add(task);  
+            var listID = Guid.Parse(ListDictionary.id["ListId"]);
+            _dbContext.Task.Add(task);
             _dbContext.SaveChanges();
             return _dbContext.ToDoLists.Include(x => x.Task).FirstOrDefault(x => x.Id == listID);
         }
@@ -46,15 +39,16 @@ namespace ToDoAPI.Services
         }
 
         
-        public void DeleteTask()
+        public Task DeleteTask(Guid id) //Här fick jag inte sätta props för då gick de inte o deleta den direkt i blazor
         {
-            var taskId = Guid.Parse(ListDictionary.id["TaskId"]);
-            var task = _dbContext.Task.FirstOrDefault(x => x.Id == taskId);
-            _dbContext.Remove(task);
+            var listID = Guid.Parse(ListDictionary.id["ListId"]);
+            var deleteTask = _dbContext.Task.FirstOrDefault(x => x.Id == id);
+            _dbContext.Remove(deleteTask);
             _dbContext.SaveChanges();
+            return deleteTask;
         }
 
-        public Task GetSingelTask(Guid id)
+        public Task GetSingelTask(Guid id) //oklart om den ens behlvs
         {
             ListDictionary.id["TaskId"] = id.ToString();
             var task = _dbContext.Task.FirstOrDefault(x => x.Id == id);

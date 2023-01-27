@@ -32,7 +32,7 @@ namespace ToDoAPI.Controllers
         }
 
         [HttpGet("ViewSingleList")]
-        public IActionResult GetRecentViewedList()   // ??oklar, metoden funkar men addressen
+        public IActionResult GetRecentViewedList()   // funkar
         {
             return Ok(_listHandler.GetRecentViewedList());
         }
@@ -51,18 +51,16 @@ namespace ToDoAPI.Controllers
             return Ok(_listHandler.GetLists());
         }
 
-        //[HttpGet("GetCurrentUserLists")]
-        //public IActionResult GetCurrentUserLists()
-        //{
-        //    var identity = HttpContext.User.Identity;
-        //    var userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
-        //    return Ok(_listHandler.GetCurrentUsersLists(identity, userId));
-        //}
+        [HttpGet("GetCurrentUsersLists")]
+        public IActionResult GetCurrentUserLists()
+        {
+            return Ok(_listHandler.GetCurrentUsersLists());
+        }
 
         [HttpPut("EditList")]
         public IActionResult Put(string listTitle)
         {
-            return Ok(_listHandler.ChangeListName(listTitle)); 
+            return Ok(_listHandler.EditList(listTitle)); 
         }
 
         //[HttpDelete("DeleteList")]

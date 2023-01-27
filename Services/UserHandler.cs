@@ -13,7 +13,7 @@ namespace ToDoAPI.Services
         }
 
 
-        public async Task<CreateUser> CreateUser(CreateUser user)         //Funkar
+        public CreateUser CreateUser(CreateUser user)         //Funkar
         {
             _dbContext.Add(user);
             _dbContext.SaveChanges();
@@ -21,7 +21,7 @@ namespace ToDoAPI.Services
         }
 
 
-        public async Task<CreateUser> DeleteUser (CreateUser user)
+        public CreateUser DeleteUser (CreateUser user)
         {
             var deleteUser = _dbContext.User.FirstOrDefault(x => x.UserName == user.UserName);
             _dbContext.User.Remove(deleteUser);
@@ -40,7 +40,7 @@ namespace ToDoAPI.Services
         }
 
 
-        public async Task<CreateUser> EditProfile(CreateUser user)    //Funkar
+        public CreateUser EditProfile(CreateUser user)    //Funkar
         {
             CreateUser theUser = _dbContext.User.FirstOrDefault(x => x.UserName == user.UserName);
             theUser.FirstName = user.FirstName ?? theUser.FirstName;
@@ -53,11 +53,11 @@ namespace ToDoAPI.Services
         }
 
 
-        public async Task<CreateUser> Authenticate(string username, string password)         //Funkar
+        public CreateUser Authenticate(CreateUser user)        //Funkar 
         {
-            var user = _dbContext.User.SingleOrDefault(x => x.UserName == username && x.Password == password);
-            UserDictionary.userId["UserId"] = user.Id.ToString();  //Funkar
-            return user;
+            var theUser = _dbContext.User.SingleOrDefault(x => x.UserName == user.UserName && x.Password == user.Password);
+            UserDictionary.userId["UserId"] = theUser.Id.ToString(); 
+            return theUser;
         }
 
         public CreateUser ChangeAccess(Guid id, Access access)

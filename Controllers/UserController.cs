@@ -41,7 +41,7 @@ namespace ToDoAPI.Controllers
 
             try
             {
-                return Ok(_userHandler.CreateUser(user).Result);
+                return Ok(_userHandler.CreateUser(user));
             }
             catch (Exception e) when (e.InnerException is InvalidOperationException)
             {
@@ -110,7 +110,7 @@ namespace ToDoAPI.Controllers
         {
 
             var user = Request.ReadFromJsonAsync<CreateUser>().Result;
-            return Ok(_userHandler.EditProfile(user).Result);
+            return Ok(_userHandler.EditProfile(user));
 
         }
 
@@ -125,14 +125,14 @@ namespace ToDoAPI.Controllers
 
 
         [AllowAnonymous]
-        [HttpPost("Login")]
+        [HttpPost("LogIn")]
         public IActionResult Login()
         {
             var user = Request.ReadFromJsonAsync<CreateUser>().Result;
 
             try
             {
-                return Ok(_userHandler.Authenticate(user.UserName, user.Password).Result);
+                return Ok(_userHandler.Authenticate(user));
             }
             catch (Exception e) when (e.InnerException is InvalidOperationException)
             {

@@ -5,7 +5,7 @@ namespace ToDoAPI.Services
 {
     public interface ITaskHandler
     {
-        CreateToDoList AddTask(string title);
+        CreateToDoList AddTask(Task task);
         IEnumerable<Task> GetTasks(Guid id);
         Task EditTaskName (string title);
         Task GetSingelTask(Guid id);
@@ -13,7 +13,7 @@ namespace ToDoAPI.Services
         Task MarkAsComplete(bool completed);
         //CreateToDoList CreateNewToDoList(string listTitle);
         //IEnumerable<CreateToDoList> GetLists();
-        void DeleteTask();
+        Task DeleteTask(Guid id);
         //CreateToDoList ChangeTaskName(int id, string value);
     }
 }
