@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 //using ToDoAPI.Security;
 using ToDoAPI.Services;
@@ -14,9 +15,11 @@ namespace ToDoAPI
             builder.Services.AddDbContext<ToDoListDBContext>(options =>
             {
                 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-            });
+                options.UseInMemoryDatabase(databaseName: "TodoDb");
 
+				//options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            });
+            
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(option =>
@@ -28,7 +31,7 @@ namespace ToDoAPI
                     Name = "Authorizations",
                     Type = SecuritySchemeType.Http,
                     BearerFormat = "JWT",
-                    Scheme = "bearer" // ändra till Bearer för att få token authorization
+                    Scheme = "bearer" // ï¿½ndra till Bearer fï¿½r att fï¿½ token authorization
                 });
 
                 option.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -53,6 +56,7 @@ namespace ToDoAPI
             builder.Services.AddScoped<ITaskHandler, TaskHandler>();
             builder.Services.AddScoped<IUserHandler, UserHandler>();
             var app = builder.Build();
+          
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

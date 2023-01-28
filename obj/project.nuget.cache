@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1pmQ+muLqSnuwpw45ZlXAE1vm9vT7g4FZAtU6ivOSwBiEYEy/3q20+v80tY+2du85hcunwzYdAq2MOMyKFYYuw==",
+  "dgSpecHash": "V7AeE3ki1UJNJFkY0MW2Q0SKKdSoU3VjOsi4JpFhmHMHDR0cV6uTJZEfkRoAmrWnn+ouBxsrFh0yOVguxZEKMQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\WilmarArias\\Documents\\Ellin\\ToDoAPI\\ToDoAPI.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\WilmarArias\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.4\\microsoft.entityframeworkcore.abstractions.6.0.4.nupkg.sha512",
     "C:\\Users\\WilmarArias\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.4\\microsoft.entityframeworkcore.analyzers.6.0.4.nupkg.sha512",
     "C:\\Users\\WilmarArias\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.4\\microsoft.entityframeworkcore.design.6.0.4.nupkg.sha512",
+    "C:\\Users\\WilmarArias\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\6.0.4\\microsoft.entityframeworkcore.inmemory.6.0.4.nupkg.sha512",
     "C:\\Users\\WilmarArias\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.4\\microsoft.entityframeworkcore.relational.6.0.4.nupkg.sha512",
     "C:\\Users\\WilmarArias\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\WilmarArias\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
